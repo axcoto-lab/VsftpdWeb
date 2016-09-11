@@ -65,9 +65,11 @@ class Users_model extends CI_Model {
 		'perm' => 'r'
 	);
 	
-	*/	 
-	if ( $this->input->post('dir') == 'def' ) { $ppath = 'none'; }
-	$q="INSERT INTO accounts (username, pass, perm, path) VALUES ( '".$this->input->post('user')."', MD5('".$this->input->post('upass')."'), 'r', '".$ppath."' )  ;";
+  */
+  $pass = $this->input->post('upass');
+  $shadow = `openssl passwd -1 -salt ''  {$pass}`;
+  if ( $this->input->post('dir') == 'def' ) { $ppath = 'none'; }
+	$q="INSERT INTO accounts (username, pass, perm, path, shadow) VALUES ( '".$this->input->post('user')."', MD5('".$this->input->post('upass')."'), 'r', '".$ppath."', '" . $shadow . "' )  ;";
 	return $this->db->query($q);
 }
 
@@ -156,7 +158,8 @@ class Users_model extends CI_Model {
 	
 	$id = $this->input->post('id');
 	$pass = $this->input->post('upass');
-	$q="UPDATE accounts SET pass = MD5('$pass') WHERE id = '$id';";
+  $shadow = `openssl passwd -1 -salt ''  {$pass}`;
+	$q="UPDATE accounts SET pass = MD5('$pass'), shadow = '$shadow' WHERE id = '$id';";
 	$this->db->query($q);
 	}
 

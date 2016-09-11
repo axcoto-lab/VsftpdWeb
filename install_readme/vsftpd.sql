@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `pass` varchar(50) NOT NULL,
   `perm` varchar(50) NOT NULL DEFAULT '0',
   `path` varchar(50) NOT NULL DEFAULT 'none',
+  `shadow` varchar(50) NOT NULL DEFAULT 'none',
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
